@@ -136,7 +136,7 @@
 <body>
     <!-- Main Content Wrapper -->
     <div id="content">
-        <h1>Hi :D Pakai PC ya?</h1>
+        <h1>Hi, pakai PC ya?</h1>
         <h2>Silahkan pilih versi minecraft-nya:</h2>
         <button class="btn" id="button1">BEDROCK</button>
         <button class="btn" id="button2">JAVA</button>
@@ -155,7 +155,7 @@
         function detectDevice() {
             const isMobile = /Mobi|Android/i.test(navigator.userAgent);
             if (isMobile) {
-                window.location.href = "minecraft://?addExternalServer=dsruy|sytd.exaroton.me:64683"; // Mobile redirect
+                window.location.href = "minecraft://?addExternalServer=dsruy|mc.stoy.biz.id:64683"; // Mobile redirect
             }
         }
 
@@ -173,7 +173,7 @@
 
         // Button events
         document.getElementById('button1').onclick = function() {
-            window.location.href = "minecraft://?addExternalServer=dsruy|sytd.exaroton.me:64683";
+            window.location.href = "minecraft://?addExternalServer=dsruy|mc.stoy.biz.id:64683";
         };
         document.getElementById('button2').onclick = showPopup;
 
