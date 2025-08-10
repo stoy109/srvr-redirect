@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>join the server</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000, #434343);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            color: white;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Wrapper for main content (for blur effect) */
+        #content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Title Styling */
+        h1 {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* Subtitle Styling */
+        h2 {
+            font-size: 1.5rem;
+            color: #ddd;
+            margin-bottom: 40px;
+            font-weight: normal;
+            opacity: 0;
+            animation: fadeInSubtitle 2s ease-out 0.5s forwards;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            width: 200px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            transform: scale(1.1);
+        }
+
+        /* Popup Styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 1000;
+            width: 300px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        /* Popup content */
+        .popup-content {
+            margin-bottom: 20px;
+        }
+
+        /* Close button */
+        .popup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s;
+        }
+
+        .popup .close-btn:hover {
+            background-color: darkred;
+        }
+
+        /* Blur background styling (only applied to #content) */
+        .blurred-background {
+            filter: blur(5px);
+            pointer-events: none;
+            transition: filter 0.3s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInSubtitle {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Content Wrapper -->
+    <div id="content">
+        <h1>Hi :D Pakai PC ya?</h1>
+        <h2>Silahkan pilih versi minecraft-nya:</h2>
+        <button class="btn" id="button1">BEDROCK</button>
+        <button class="btn" id="button2">JAVA</button>
+    </div>
+
+    <!-- Popup -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <p>sytd.exaroton.me:64683</p>
+        </div>
+        <button class="close-btn" onclick="closePopup()">X</button>
+    </div>
+
+    <script>
+        // Detect device function
+        function detectDevice() {
+            const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+                window.location.href = "minecraft://?addExternalServer=dsruy|sytd.exaroton.me:64683"; // Mobile redirect
+            }
+        }
+
+        // Show popup
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('content').classList.add('blurred-background');
+        }
+
+        // Close popup
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('content').classList.remove('blurred-background');
+        }
+
+        // Button events
+        document.getElementById('button1').onclick = function() {
+            window.location.href = "minecraft://?addExternalServer=dsruy|sytd.exaroton.me:64683";
+        };
+        document.getElementById('button2').onclick = showPopup;
+
+        // Run device detection on load
+        window.onload = detectDevice;
+    </script>
+</body>
+</html>
