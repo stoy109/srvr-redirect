@@ -136,29 +136,10 @@
 <body>
     <!-- Main Content Wrapper -->
     <div id="content">
-        <h1>Hi, pakai PC ya?</h1>
-        <h2>Silahkan pilih versi minecraft-nya:</h2>
-        <button class="btn" id="button1">BEDROCK</button>
-        <button class="btn" id="button2">JAVA</button>
-    </div>
-
-    <!-- Popup -->
-    <div class="popup" id="popup">
-        <div class="popup-content">
-            <p>mc.stoy.biz.id</p>
-        </div>
-        <button class="close-btn" onclick="closePopup()">X</button>
+        <h1>Hi, sorry the server is in maintenance</h1>
     </div>
 
     <script>
-        // Detect device function
-        function detectDevice() {
-            const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-            if (isMobile) {
-                window.location.href = "minecraft://?addExternalServer=dyp:survival|mc.stoy.biz.id:64683"; // Mobile redirect
-            }
-        }
-
         // Show popup
         function showPopup() {
             document.getElementById('popup').style.display = 'block';
@@ -176,9 +157,6 @@
             window.location.href = "minecraft://?addExternalServer=dyp:survival|mc.stoy.biz.id:64683";
         };
         document.getElementById('button2').onclick = showPopup;
-
-        // Run device detection on load
-        window.onload = detectDevice;
     </script>
 </body>
 </html>
