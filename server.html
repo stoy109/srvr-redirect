@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>join the server</title>
+    <title>Cara Join Server</title>
     <style>
         /* Global Styles */
         body {
@@ -21,12 +21,20 @@
             align-items: center;
         }
 
-        /* Wrapper for main content (for blur effect) */
+        /* Wrapper for main content */
         #content {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-align: center;
+            padding: 20px;
+            transition: filter 0.4s ease, transform 0.4s ease; /* Transisi untuk blur */
+        }
+
+        #content.blurred-background {
+            filter: blur(8px) brightness(0.7);
+            transform: scale(0.98);
         }
 
         /* Title Styling */
@@ -47,6 +55,7 @@
             font-weight: normal;
             opacity: 0;
             animation: fadeInSubtitle 2s ease-out 0.5s forwards;
+            max-width: 600px;
         }
 
         /* Buttons */
@@ -58,73 +67,114 @@
             margin: 10px;
             cursor: pointer;
             transition: transform 0.3s ease, background-color 0.3s ease;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(255, 255, 255, 0.1);
             color: white;
-            width: 200px;
+            width: 250px;
             text-align: center;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(255, 255, 255, 0.2);
             transform: scale(1.1);
         }
+        
+        /* === TOMBOL MODPACK BARU === */
+        .modpack-btn {
+            background-color: #007bff;
+            margin-top: 20px;
+        }
+        
+        .modpack-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
 
-        /* Popup Styles */
+        /* Style Pop Up */
         .popup {
-            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.85);
+            background-color: rgba(20, 20, 20, 0.95);
             color: white;
-            padding: 30px;
+            padding: 20px 30px;
             border-radius: 10px;
             text-align: center;
             z-index: 1000;
-            width: 300px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.7);
+            
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, -50%) scale(0.9);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+        
+        .popup.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .popup-content h3 {
+            margin-top: 10px;
+            letter-spacing: 1px;
+            color: #55aaff;
+        }
+        
+        .popup-content .tutorial-steps {
+            text-align: left;
+            margin-top: 20px;
+            padding-left: 20px;
         }
 
-        /* Popup content */
-        .popup-content {
-            margin-bottom: 20px;
+        .popup-content .tutorial-steps li {
+            margin-bottom: 10px;
+            line-height: 1.5;
         }
-
+        
+        .server-ip {
+            background-color: #111;
+            border: 1px solid #444;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #4CAF50;
+            cursor: text;
+        }
+        
         /* Close button */
         .popup .close-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: red;
+            top: -15px;
+            right: -15px;
+            background-color: #ff4757;
             color: white;
-            border: none;
+            border: 2px solid white;
             border-radius: 50%;
-            padding: 10px 15px;
+            width: 40px;
+            height: 40px;
             cursor: pointer;
-            font-size: 1.2rem;
-            transition: background-color 0.3s;
+            font-size: 1.5rem;
+            line-height: 36px;
+            transition: transform 0.3s, background-color 0.3s;
         }
 
         .popup .close-btn:hover {
-            background-color: darkred;
-        }
-
-        /* Blur background styling (only applied to #content) */
-        .blurred-background {
-            filter: blur(5px);
-            pointer-events: none;
-            transition: filter 0.3s ease;
+            background-color: #e02f3f;
+            transform: scale(1.1) rotate(90deg);
         }
 
         /* Animations */
         @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(-30px); }
-            100% { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeInSubtitle {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         @keyframes gradientAnimation {
             0% { background-position: 0% 50%; }
@@ -134,29 +184,93 @@
     </style>
 </head>
 <body>
-    <!-- Main Content Wrapper -->
     <div id="content">
-        <h1>Hi, sorry the server is in maintenance</h1>
+        <h1 id="main-title">mc.stoy.biz.id</h1>
+        <h2 id="sub-title">Pilih tutorial sesuai versi Minecraft kamu:</h2>
+        
+        <div id="button-container">
+            <button class="btn" id="oriBtn">Tutorial (Original)</button>
+            <button class="btn" id="crackBtn">Tutorial (Bajakan)</button>
+        </div>
+    </div>
+
+    <div class="popup" id="oriPopup">
+        <button class="close-btn" onclick="closePopup()">×</button>
+        <div class="popup-content">
+            <h3>Tutorial Minecraft Original</h3>
+            <video width="100%" controls>
+                <source src="mcserverwebsrc/ori.mp4" type="video/mp4">
+                Browser kamu tidak mendukung tag video.
+            </video>
+            <h4>Langkah-langkah Join Server:</h4>
+            <ol class="tutorial-steps">
+                <li>Setelah game terbuka, klik tombol <strong>"Multiplayer"</strong>.</li>
+                <li>Klik tombol <strong>"Add Server"</strong> di bagian bawah.</li>
+                <li>Untuk "Server Name", isi bebas (Contoh: <strong>Server Keren</strong>).</li>
+                <li>Untuk "Server Address", masukkan IP berikut: <br><strong class="server-ip">mc.stoy.biz.id</strong></li>
+                <li>Klik <strong>"Done"</strong>, lalu cari servernya dan klik <strong>"Join Server"</strong>.</li>
+            </ol>
+            <a href="LINK_MODPACK_LU" class="btn modpack-btn" target="_blank" rel="noopener noreferrer">Download Modpack</a>
+        </div>
+    </div>
+
+    <div class="popup" id="crackPopup">
+        <button class="close-btn" onclick="closePopup()">×</button>
+        <div class="popup-content">
+            <h3>Tutorial Minecraft Bajakan</h3>
+            <video width="100%" controls>
+                <source src="mcserverwebsrc/crack.mp4" type="video/mp4">
+                Browser kamu tidak mendukung tag video.
+            </video>
+            <h4>Langkah-langkah Join Server:</h4>
+            <ol class="tutorial-steps">
+                <li>Setelah game terbuka, klik tombol <strong>"Multiplayer"</strong>.</li>
+                <li>Klik tombol <strong>"Add Server"</strong> di bagian bawah.</li>
+                <li>Untuk "Server Name", isi bebas (Contoh: <strong>Server Keren</strong>).</li>
+                <li>Untuk "Server Address", masukkan IP berikut: <br><strong class="server-ip">mc.stoy.biz.id</strong></li>
+                <li>Klik <strong>"Done"</strong>, lalu cari servernya dan klik <strong>"Join Server"</strong>.</li>
+            </ol>
+            <a href="LINK_MODPACK_LU" class="btn modpack-btn" target="_blank" rel="noopener noreferrer">Download Modpack</a>
+        </div>
     </div>
 
     <script>
-        // Show popup
-        function showPopup() {
-            document.getElementById('popup').style.display = 'block';
-            document.getElementById('content').classList.add('blurred-background');
+        const content = document.getElementById('content');
+        const oriPopup = document.getElementById('oriPopup');
+        const crackPopup = document.getElementById('crackPopup');
+
+        // === FUNGSI DETEKSI HP YANG BARU ===
+        function detectDevice() {
+            const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+            if (isMobile) {
+                // Gak redirect, cuma ganti tulisan doang
+                document.getElementById('main-title').innerText = "Hanya Untuk PC";
+                document.getElementById('sub-title').innerText = "Sorry, Bedrock is not available but you can see the tutorial here.";
+                // Tombol tutorial tetap ditampilkan
+            }
         }
 
-        // Close popup
+        function showOriPopup() {
+            oriPopup.classList.add('show');
+            content.classList.add('blurred-background');
+        }
+
+        function showCrackPopup() {
+            crackPopup.classList.add('show');
+            content.classList.add('blurred-background');
+        }
+
         function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-            document.getElementById('content').classList.remove('blurred-background');
+            oriPopup.classList.remove('show');
+            crackPopup.classList.remove('show');
+            content.classList.remove('blurred-background');
         }
 
-        // Button events
-        document.getElementById('button1').onclick = function() {
-            window.location.href = "minecraft://?addExternalServer=dyp:survival|mc.stoy.biz.id:64683";
-        };
-        document.getElementById('button2').onclick = showPopup;
+        document.getElementById('oriBtn').onclick = showOriPopup;
+        document.getElementById('crackBtn').onclick = showCrackPopup;
+        
+        // Jalanin deteksi device pas halaman kebuka
+        detectDevice();
     </script>
 </body>
 </html>
