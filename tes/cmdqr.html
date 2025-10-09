@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Command Executor</title>
+</head>
+<body>
+  <h2>QR Command Executor</h2>
+  <p>Processing command...</p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const cmd = params.get("cmd");
+
+    switch(cmd) {
+      case "alert_hello":
+        alert("Hello! This QR triggered a pop-up!");
+        break;
+      case "play_sound":
+        const audio = new Audio("https://www.soundjay.com/button/beep-07.wav");
+        audio.play();
+        break;
+      case "open_google":
+        window.location.href = "https://google.com";
+        break;
+      default:
+        document.body.innerHTML = "<h3>No valid command found.</h3>";
+    }
+  </script>
+</body>
+</html>
