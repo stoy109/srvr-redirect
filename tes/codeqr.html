@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Command Generator</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    input, select, button { padding: 10px; margin: 5px; }
+  </style>
+</head>
+<body>
+  <h2>QR Command Generator</h2>
+  <p>Pilih aksi yang mau dijalankan:</p>
+  
+  <select id="command">
+    <option value="alert_hello">Show Alert</option>
+    <option value="play_sound">Play Sound</option>
+    <option value="open_google">Open Google</option>
+  </select>
+  
+  <br>
+  <button onclick="generateQR()">Generate QR</button>
+  
+  <div id="qrcode" style="margin-top:20px;"></div>
+
+  <script>
+    function generateQR() {
+      const baseUrl = window.location.origin + "/cmdqr.html";
+      const cmd = document.getElementById("command").value;
+      const fullUrl = `${baseUrl}?cmd=${cmd}`;
+      
+      document.getElementById("qrcode").innerHTML = "";
+      new QRCode(document.getElementById("qrcode"), fullUrl);
+    }
+  </script>
+</body>
+</html>
